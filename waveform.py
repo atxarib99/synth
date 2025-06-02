@@ -15,3 +15,25 @@ class Waveform(ABC):
         """
         pass
 
+    def build(self):
+        wave = self.build_waveform()
+        if hasattr(self, "transformations"):
+            for transformation in self.transformations:
+                wave = transformation.transform(wave)
+                print(len(wave))
+        return wave
+
+
+    def add_transformation(self, transformation):
+        if not hasattr(self, "transformations"):
+            self.transformations = []
+        self.transformations.append(transformation)
+        return self
+
+    def add_transformations(self, transformations: list):
+        if not hasattr(self, "transformations"):
+            self.transformations = []
+        for transformation in transformations:
+            self.transformations.append(transformation)
+        return self
+
