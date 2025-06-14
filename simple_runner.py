@@ -1,4 +1,5 @@
 from sinewave import Sinewave
+from squarewave import Squarewave 
 from audio import Audio
 from noise import Noise
 import matplotlib.pyplot as plt
@@ -10,7 +11,7 @@ sample_rate = 44100
 audio_builder = Audio(sample_rate)
 
 #build 80hz sine wave
-sinewave_builder = Sinewave(80)
+sinewave_builder = Squarewave(80, 1)
 sinewave = sinewave_builder.build_waveform()
 audio_builder.add_wave(sinewave)
 

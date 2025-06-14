@@ -54,8 +54,9 @@ class Audio:
 
 
         #convert audio to 16-bit audio
-        #normalize wave
-        audio = self.wave * (2**15 - 1) / np.max(np.abs(self.wave))
+        #normalize wave again. Waves are normalized, but audio scope transformation may invalidate
+        audio = self.wave * (2**15 - 1)
+        audio = audio / np.max(np.abs(self.wave))
         #convert to int16
         audio = audio.astype(np.int16)
 

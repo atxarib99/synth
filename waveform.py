@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+import numpy as np
 
 class Waveform(ABC):
     """
@@ -20,7 +21,12 @@ class Waveform(ABC):
         if hasattr(self, "transformations"):
             for transformation in self.transformations:
                 wave = transformation.transform(wave)
-                print(len(wave))
+
+        #normalize wave
+        wave = wave * (2**15 - 1)
+        if np.max(np.abs(wave)) > (2**15 - 1):
+            wave = wave / np.max(np.abs(wave))
+            
         return wave
 
 
