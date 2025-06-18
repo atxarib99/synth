@@ -22,11 +22,6 @@ class Waveform(ABC):
             for transformation in self.transformations:
                 wave = transformation.transform(wave)
 
-        #normalize wave
-        wave = wave * (2**15 - 1)
-        if np.max(np.abs(wave)) > (2**15 - 1):
-            wave = wave / np.max(np.abs(wave))
-            
         return wave
 
 
