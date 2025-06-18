@@ -4,12 +4,13 @@ import numpy as np
 
 class Audio:
 
-    def __init__(self, sample_rate):
+    def __init__(self, sample_rate, loop=1):
         self.sample_rate = sample_rate
         self.wave = np.linspace(0, 1, 0)
         #hold array of waves we will put together later
         self.waves = []
         self.transformations = []
+        self.loop = loop -1
 
     def add_wave(self, wave):
         self.waves.append(wave)
@@ -59,6 +60,9 @@ class Audio:
         audio = audio / np.max(np.abs(self.wave))
         #convert to int16
         audio = audio.astype(np.int16)
+        one_audio = audio
+        for i in range(0, self.loop):
+            audio = np.concatenate((audio, one_audio))
 
         return audio
 
