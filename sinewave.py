@@ -3,7 +3,7 @@ import numpy as np
 
 class Sinewave(Waveform):
 
-    def __init__(self, frequency, duration=1, volume=1):
+    def __init__(self, frequency, duration=1.0, volume=1.0):
         self.frequency = frequency
         self.duration = duration
         self.volume = volume

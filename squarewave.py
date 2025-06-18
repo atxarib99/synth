@@ -3,7 +3,7 @@ import numpy as np
 
 class Squarewave(Waveform):
 
-    def __init__(self, frequency, duration=1, volume=0.05):
+    def __init__(self, frequency, duration=1.0, volume=0.05):
         self.frequency = frequency
         self.duration = duration
         self.volume = volume
