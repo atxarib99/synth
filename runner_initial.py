@@ -1,5 +1,5 @@
 from sinewave import Sinewave
-from audio import Audio
+from track import Track
 from noise import Noise
 import matplotlib.pyplot as plt
 import simpleaudio as sa
@@ -26,7 +26,7 @@ plt.plot(sinewave_two)
 plt.show()
 
 #audio builder
-audio_builder = Audio(sample_rate)
+audio_builder = Track(sample_rate)
 
 audio_builder.add_wave(sinewave_one_long)
 

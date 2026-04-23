@@ -21,14 +21,18 @@ attack, decay, sustain, release. the durations are changed with percentages as d
 #### 8 bit! (to come soon!)
 #### write your own!
 
-### audio
-the final holding cell of the track. this will normalize and tranform the audio into a playable track
-#### audio level transformation
-transformation can be added at the audio level which will apply to all waveforms, on top of transformation already added to independent waveforms. 
-#### loop the track
-how many times to loop the track
+### track
+a track holds a ordered list of waveforms. waveforms can be appended to a track. transformations can be added to a whole track as well.
+this will allow multiple tracks to "play" in parallel.
 
-## installation 
+### audio
+the final holding cell of all tracks. tracks are added to an audio, and combined together. this will normalize and transform the audio into a playable track
+#### audio level transformation
+transformation can be added at the audio level which will apply to all tracks and waveforms, on top of transformation already added to tracks and independent waveforms.
+#### loop the track
+how many times to loop the audio
+
+## installation
 simply run
 ```
 pip install -r requirements.txt

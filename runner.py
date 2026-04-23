@@ -1,7 +1,7 @@
 #pull in the waveforms, tranformations, and audio track
 from sinewave import Sinewave
 from squarewave import Squarewave
-from audio import Audio
+from track import Track
 from noise import Noise
 from adsr import ADSR
 
@@ -15,8 +15,8 @@ import simpleaudio as sa
 sample_rate = 44100
 
 
-#audio builder
-audio_builder = Audio(sample_rate, loop=2)
+#track builder
+track_builder = Track(sample_rate, loop=2)
 
 #some tranformations created beforehand so that we can reuse them
 aggressive_attack = ADSR(attack_duration=.1, decay_duration=.25, decay_min=.1, sustain_duration=.5, release_duration=.15)
@@ -24,7 +24,7 @@ slow_attack = ADSR(attack_duration=.9, decay_duration=.025, decay_min=.1, sustai
 long_delay = ADSR(attack_duration=.1, decay_duration=.85, decay_min=.01, sustain_duration=0, release_duration=.05)
 
 #add waves to the track!
-audio_builder.add_waves([
+track_builder.add_waves([
     Sinewave(80,1).add_transformation(Noise(0.005)), # an 80hz sinewave that plays for 1 second, with some noise added. 
     Sinewave(80,.25, 1), #a shorter 80hz sinewave, that only plays for a quarter second, at full volume
     Sinewave(120,.25, 0.5), #a shorter 80hz sinewave, that only plays for a quarter second, at half volume
@@ -54,14 +54,20 @@ audio_builder.add_waves([
     Sinewave(120,.25),
     Sinewave(160,.25),
     Sinewave(200,.25),
-    Sinewave(80,1)
+    Sinewave(80,1),
+    Sinewave(80, 4, 0.0001).add_transformation(Noise(0.1)).add_transformation(slow_attack),
+    Sinewave(80, .5, 0.0001).add_transformation(Noise(0.1)).add_transformation(aggressive_attack),
+    Sinewave(80, .5, 0.0001).add_transformation(Noise(0.1)).add_transformation(aggressive_attack),
+    Sinewave(80, .5, 0.0001).add_transformation(Noise(0.1)).add_transformation(aggressive_attack),
+    Sinewave(80, .5, 0.0001).add_transformation(Noise(0.1)).add_transformation(aggressive_attack)
 ])
 
+
 # add noise to the whole track
-audio_builder.add_transformation(Noise(0.002))
+track_builder.add_transformation(Noise(0.002))
 
 #build the final audio
-final_audio = audio_builder.build_audio()
+final_audio = track_builder.build_audio()
 
 #plot the final audio so you can see your creation!
 plt.plot(final_audio)

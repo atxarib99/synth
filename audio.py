@@ -3,21 +3,19 @@ from waveform import Waveform
 import numpy as np
 
 class Audio:
-
-    def __init__(self, sample_rate, loop=1):
-        self.sample_rate = sample_rate
-        self.wave = np.linspace(0, 1, 0)
-        #hold array of waves we will put together later
-        self.waves = []
+    def __init__(self, sample_rate, loop=0) -> None:
+        self.wave = None
+        self.tracks = []
         self.transformations = []
-        self.loop = loop -1
+        self.sample_rate = sample_rate
+        self.loop = loop
 
-    def add_wave(self, wave):
-        self.waves.append(wave)
+    def add_track(self, track) -> None:
+        self.tracks.append(track)
 
-    def add_waves(self, waves_to_add):
-        for wave in waves_to_add:
-            self.waves.append(wave)
+    def add_tracks(self, tracks):
+        for track in tracks:
+            self.tracks.append(track)
 
     def add_transformation(self, transformation):
         self.transformations.append(transformation)
@@ -28,19 +26,47 @@ class Audio:
 
     def build_audio(self):
 
-        #compile list of waves into single object
-        count = 0
-        for wave in self.waves:
-            count += 1
-            #if its of type Waveform, build it
-            if isinstance(wave, Waveform):
-                #TODO: validate each part independently
-                self.wave = np.append(self.wave, wave.build())
-            elif isinstance(wave, np.ndarray):
-                #TODO: validate each part independently
-                self.wave = np.append(self.wave, wave)
+        # holds final waves for each track
+        final_waves = []
+
+        # for each track, build waves into a single object
+        for track in self.tracks:
+            count = 0
+            final_wave = np.linspace(0,0,0)
+            # loop the track as specified.
+            for i in range(0, track.loop):
+                for wave in track.waves:
+                    count += 1
+                    #if its of type Waveform, build it
+                    if isinstance(wave, Waveform):
+                        #TODO: validate each part independently
+                        final_wave = np.append(final_wave, wave.build())
+                    elif isinstance(wave, np.ndarray):
+                        #TODO: validate each part independently
+                        final_wave = np.append(final_wave, wave)
+                    else:
+                        print("Invalid wave type found during building at position:" + str(count))
+
+            # save this final_wave
+            final_waves.append(final_wave)
+
+        # all final_waves need to be same length
+        # find longest wave
+        longest_wave_len = len(max(final_waves, key=lambda x: len(x)))
+
+        # for each wave, if wave not long enough, add length to end.
+        index = 0
+        while index < len(final_waves):
+            if len(final_waves[index]) < longest_wave_len:
+                final_waves[index] = np.append(final_waves[index], np.linspace(0,0,longest_wave_len - len(final_waves[index])))
+            index += 1
+
+        # waveform addition all tracks together
+        for wave in final_waves:
+            if self.wave is None:
+                self.wave = wave
             else:
-                print("Invalid wave type found during building at position:" + str(count))
+                self.wave = self.wave + wave
 
 
         #apply audio level transforms

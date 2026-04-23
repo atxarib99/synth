@@ -10,13 +10,13 @@ class Waveform(ABC):
     duration = 1.0
 
     @abstractmethod
-    def build_waveform(self):
+    def build_waveform(self) -> np.ndarray:
         """
         build_waveform() will be called by runner classes or anything else trying to build a waveform
         """
         pass
 
-    def build(self):
+    def build(self) -> np.ndarray:
         wave = self.build_waveform()
         if hasattr(self, "transformations"):
             for transformation in self.transformations:

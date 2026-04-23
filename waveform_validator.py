@@ -19,6 +19,7 @@ class WaveformValidator:
             return False
         return True
 
+    #TODO: Disgusting, can't have tracks ending in non-whole numbers? what was i thinking here??
     def validate_wave(self, wave) -> bool:
         if not (len(wave) / self.sample_rate == len(wave) // self.sample_rate):
             return False
