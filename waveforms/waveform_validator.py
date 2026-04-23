@@ -1,4 +1,4 @@
-from waveform import Waveform
+from waveforms.waveform import Waveform
 
 class WaveformValidator:
     """

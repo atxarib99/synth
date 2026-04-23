@@ -1,4 +1,4 @@
-from transformation import Transformation
+from transformations.transformation import Transformation
 import numpy as np
 
 class ADSR(Transformation):

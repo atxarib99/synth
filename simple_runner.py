@@ -1,10 +1,10 @@
 #pull in the waveforms, tranformations, and audio track
-from sinewave import Sinewave
-from squarewave import Squarewave
+from waveforms.sinewave import Sinewave
+from waveforms.squarewave import Squarewave
 from track import Track
 from audio import Audio
-from noise import Noise
-from adsr import ADSR
+from transformations.noise import Noise
+from transformations.adsr import ADSR
 
 #plotting library
 import matplotlib.pyplot as plt

@@ -1,9 +1,9 @@
-from waveform import Waveform
+from waveforms.waveform import Waveform
 import numpy as np
 
-class Squarewave(Waveform):
+class Sinewave(Waveform):
 
-    def __init__(self, frequency, duration=1.0, volume=0.05):
+    def __init__(self, frequency, duration=1.0, volume=1.0):
         self.frequency = frequency
         self.duration = duration
         self.volume = volume
@@ -14,9 +14,5 @@ class Squarewave(Waveform):
 
         with np.nditer(wave, op_flags=['readwrite']) as it:
             for cell in it:
-                if cell[...] > 0:
-                    cell[...] = self.volume
-                else:
-                    cell[...] = self.volume * -1
-
+                cell[...] = cell[...] * self.volume
         return wave

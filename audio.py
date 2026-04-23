@@ -1,5 +1,5 @@
-from waveform_validator import WaveformValidator
-from waveform import Waveform
+from waveforms.waveform_validator import WaveformValidator
+from waveforms.waveform import Waveform
 import numpy as np
 
 class Audio:
